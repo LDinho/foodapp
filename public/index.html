@@ -1,0 +1,62 @@
+<html>
+
+  <head>
+    <title>Snappy Dish</title>
+    <link href="https://fonts.googleapis.com/css?family=Proza+Libre" rel="stylesheet">
+    <link href='style.css' rel='stylesheet'>
+    <link href='pageStyle.css' rel='stylesheet'>
+    <script src="/node_modules/lodash/lodash.js"></script>
+    <script src="/node_modules/angular/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.js"></script>
+    <script src='/node_modules/ng-file-upload/dist/ng-file-upload.js'></script>
+    <script src='/node_modules/ng-autocomplete/src/ngAutocomplete.js'></script>
+    <script src='/node_modules/ngmap/build/scripts/ng-map.js'></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyADxfvlkkFsXf7TdnHHfPaoQRQ6UhNttvg&libraries=places"></script>
+    <script src='services/services.js'></script>
+    <script src='food.js'></script>
+    <script src='upload.js'></script>
+    <script src='map.js'></script>
+    <script src='trending.js'></script>
+    <script src='display.js'></script>
+  </head>
+
+  <body ng-app="foodApp">
+
+    <div class="bgimg-1">
+      <div class="caption">
+       <span class="border">Snappy Dish</span>
+     </div>
+    </div>
+
+    <div class='content'>
+
+      <div ng-controller='MapCtrl as mapModule' class='left'>
+        Enter an address: <br/>
+        <input id="pac-input"
+          class="controls"
+          places-auto-complete size=80
+          ng-model="mapModule.address"
+          component-restrictions="{country:'us'}"
+          types="{{types}}"
+          on-place-changed="mapModule.placeChanged()" /> <br/>
+
+        <ng-map zoom="13" center="[40.747559, -73.989861]">
+          <marker position="{{mapModule.place.geometry.location}}" animation="Animation.BOUNCE"></marker>
+        </ng-map>
+      </div>
+
+      <div ng-controller='DefaultCtrl' class='right'>
+        <ul>
+          <a href="#trending"><li ng-class="{'active': isActive('/trending')}">Trending</li></a>
+          <a href="#upload"><li ng-class="{'active': isActive('/upload')}">Upload</li></a>
+          <a href="#display"><li ng-class="{'active': isActive('/display')}">Display</li></a>
+        </ul>
+      </div>
+
+      <ng-view></ng-view>
+
+    </div>
+
+  </body>
+
+</html>
